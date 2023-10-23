@@ -31,7 +31,7 @@ class LoginPage extends StatelessWidget {
               const SizedBox(height: 20),
               GradientButton(
                 onPressed: () {},
-                text: 'Fazer Login',
+                text: 'Entrar',
               ),
               const SizedBox(height: 15),
               GradientButton(onPressed: () {}, text: 'Registrar-se'),
