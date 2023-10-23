@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lackstage/ui/gradient_button.dart';
 import 'package:lackstage/ui/login_field.dart';
 import '../ui/social_button.dart';
+import 'HomePage.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -30,7 +31,10 @@ class LoginPage extends StatelessWidget {
               const LoginField(hintText: 'Senha'),
               const SizedBox(height: 20),
               GradientButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => HomePage()));
+                },
                 text: 'Entrar',
               ),
               const SizedBox(height: 15),
