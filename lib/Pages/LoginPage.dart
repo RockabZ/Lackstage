@@ -29,7 +29,10 @@ class LoginPage extends StatelessWidget {
               const SizedBox(height: 15),
               const LoginField(hintText: 'Email'),
               const SizedBox(height: 15),
-              const LoginField(hintText: 'Senha'),
+              const LoginField(
+                hintText: 'Senha',
+                obscureText: true,
+              ),
               const SizedBox(height: 20),
               GradientButton(
                 onPressed: () {
