@@ -11,69 +11,75 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SafeArea(
-      child: SingleChildScrollView(
-        child: Center(
-          child: Column(
-            children: [
-              const SizedBox(height: 20),
-              const Text('Lackstage',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 50)),
-              Image.asset(
-                'assets/images/Logo.png',
-                height: 150,
-              ),
-              const SizedBox(
-                height: 50,
-              ),
-              const SizedBox(height: 15),
-              const LoginField(hintText: 'Email'),
-              const SizedBox(height: 15),
-              const LoginField(
-                hintText: 'Senha',
-                obscureText: true,
-              ),
-              const SizedBox(height: 20),
-              GradientButton(
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => HomePage()));
-                },
-                text: 'Entrar',
-              ),
-              const SizedBox(height: 15),
-              GradientButton(
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => RegisterPage()));
-                  },
-                  text: 'Registrar-se'),
-              const SizedBox(height: 20),
-              const Text(
-                'ou',
-                style: TextStyle(
-                  fontSize: 17,
+      body: SafeArea(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text('Lackstage',
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 50)),
+                Image.asset(
+                  'assets/images/Logo.png',
+                  height: 150,
                 ),
-              ),
-              const SizedBox(height: 20),
-              SocialButton(
-                iconPath: 'assets/svgs/g_logo.svg',
-                label: 'Fazer login com o Google',
-                onPressed: () {},
-              ),
-              const SizedBox(height: 20),
-              SocialButton(
-                iconPath: 'assets/svgs/f_logo.svg',
-                label: 'Fazer login com o Facebook',
-                horizontalPadding: 80,
-                onPressed: () {},
-              ),
-            ],
-          ),
+                const SizedBox(
+                  height: 50,
+                ),
+                const SizedBox(height: 15),
+                const LoginField(hintText: 'Email'),
+                const SizedBox(height: 15),
+                const LoginField(
+                  hintText: 'Senha',
+                  obscureText: true,
+                ),
+                const SizedBox(height: 20),
+                GradientButton(
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => HomePage()));
+                  },
+                  text: 'Entrar',
+                ),
+                const SizedBox(height: 15),
+                GradientButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => RegisterPage()));
+                    },
+                    text: 'Registrar-se'),
+                const SizedBox(height: 20),
+                const Text(
+                  'ou',
+                  style: TextStyle(
+                    fontSize: 17,
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SocialButton(
+                      iconPath: 'assets/svgs/g_logo.svg',
+                      onPressed: () {},
+                    ),
+                    const SizedBox(width: 20),
+                    SocialButton(
+                      iconPath: 'assets/svgs/f_logo.svg',
+                      onPressed: () {},
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ],
         ),
       ),
-    ));
+    );
   }
 }
