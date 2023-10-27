@@ -19,7 +19,7 @@ class LoginPage extends StatelessWidget {
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text('Lackstage',
+                const Text('Login',
                     style:
                         TextStyle(fontWeight: FontWeight.bold, fontSize: 50)),
                 Image.asset(

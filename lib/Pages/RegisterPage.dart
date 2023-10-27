@@ -19,7 +19,7 @@ class RegisterPage extends StatelessWidget {
               child: Column(
                 children: [
                   const SizedBox(height: 20),
-                  const Text('Lackstage',
+                  const Text('Registro',
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 50)),
                   Image.asset(
