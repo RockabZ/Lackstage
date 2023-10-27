@@ -52,6 +52,21 @@ class RegisterPage extends StatelessWidget {
                     },
                     text: 'Cadastrar',
                   ),
+                  const SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SocialButton(
+                        iconPath: 'assets/svgs/g_logo.svg',
+                        onPressed: () {},
+                      ),
+                      const SizedBox(width: 20),
+                      SocialButton(
+                        iconPath: 'assets/svgs/f_logo.svg',
+                        onPressed: () {},
+                      ),
+                    ],
+                  )
                 ],
               ),
             ),
