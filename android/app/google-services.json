@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "616449335266",
+    "project_id": "lackstage",
+    "storage_bucket": "lackstage.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:616449335266:android:0483f8ad70f85668fbe3bb",
+        "android_client_info": {
+          "package_name": "com.example.lackstage"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8RpKZFB5bEuaca2D4-Vvq9CKNaA5gEx0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
