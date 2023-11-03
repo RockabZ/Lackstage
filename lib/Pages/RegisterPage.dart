@@ -6,6 +6,11 @@ import 'package:lackstage/ui/gradient_button.dart';
 
 class RegisterPage extends StatelessWidget {
   final TextEditingController _nome = TextEditingController();
+  final TextEditingController _telefone = TextEditingController();
+  final TextEditingController _cpf = TextEditingController();
+  final TextEditingController _email = TextEditingController();
+  final TextEditingController _senha = TextEditingController();
+
   RegisterPage({super.key});
 
   @override
@@ -32,24 +37,35 @@ class RegisterPage extends StatelessWidget {
                     height: 50,
                   ),
                   const SizedBox(height: 15),
-                  LoginField(controller: _nome, hintText: 'Nome'),
+                  LoginField(controller: _nome, hintText: 'Nome Completo'),
                   const SizedBox(height: 15),
-                  const LoginField(hintText: 'Telefone'),
+                  LoginField(controller: _telefone, hintText: 'Telefone'),
                   const SizedBox(height: 15),
-                  const LoginField(hintText: 'CPF'),
+                  LoginField(controller: _cpf, hintText: 'CPF'),
                   const SizedBox(height: 15),
-                  const LoginField(hintText: 'Email'),
+                  LoginField(controller: _email, hintText: 'Email'),
                   const SizedBox(height: 15),
-                  const LoginField(
+                  LoginField(
                     hintText: 'Senha',
                     obscureText: true,
+                    controller: _senha,
                   ),
                   const SizedBox(height: 20),
                   const SizedBox(height: 15),
                   GradientButton(
                     onPressed: () {
                       final Nome = _nome.text;
-                      CreateUser(nome: Nome, context: context);
+                      final telefone = _telefone.text;
+                      final cpf = _cpf.text;
+                      final email = _email.text;
+                      final senha = _senha.text;
+                      CreateUser(
+                          nome: Nome,
+                          email: email,
+                          telefone: telefone,
+                          cpf: cpf,
+                          senha: senha,
+                          context: context);
                     },
                     text: 'Cadastrar',
                   ),
@@ -78,14 +94,20 @@ class RegisterPage extends StatelessWidget {
   }
 
   Future CreateUser(
-      {required String nome, required BuildContext context}) async {
+      {required String nome,
+      required String email,
+      required String telefone,
+      required String cpf,
+      required String senha,
+      required BuildContext context}) async {
     final docUser = FirebaseFirestore.instance.collection('users').doc();
     final user = User(
-      id: 12,
+      id: docUser.id,
       nome: nome,
-      email: 'maria@mmm.com',
-      cpf: 05410067885,
-      senha: 'petstttss',
+      telefone: telefone,
+      email: email,
+      cpf: cpf,
+      senha: senha,
     );
     final json = user.toJson();
 
@@ -95,19 +117,27 @@ class RegisterPage extends StatelessWidget {
 }
 
 class User {
-  final int id;
+  final String id;
   final String nome;
+  final String telefone;
   final String email;
-  final int cpf;
+  final String cpf;
   final String senha;
 
   User(
       {required this.id,
       required this.nome,
+      required this.telefone,
       required this.email,
       required this.cpf,
       required this.senha});
 
-  Map<String, dynamic> toJson() =>
-      {'Id': id, 'Nome': nome, 'E-mail': email, 'CPF': cpf, 'Senha': senha};
+  Map<String, dynamic> toJson() => {
+        'Id': id,
+        'Nome': nome,
+        'Telefone': telefone,
+        'E-mail': email,
+        'CPF': cpf,
+        'Senha': senha
+      };
 }
