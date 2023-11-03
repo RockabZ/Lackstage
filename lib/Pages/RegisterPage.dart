@@ -1,10 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lackstage/ui/login_field.dart';
 import '../ui/social_button.dart';
 import 'package:lackstage/ui/gradient_button.dart';
 
 class RegisterPage extends StatelessWidget {
-  const RegisterPage({super.key});
+  final TextEditingController _nome = TextEditingController();
+  RegisterPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +32,7 @@ class RegisterPage extends StatelessWidget {
                     height: 50,
                   ),
                   const SizedBox(height: 15),
-                  const LoginField(hintText: 'Nome'),
+                  LoginField(controller: _nome, hintText: 'Nome'),
                   const SizedBox(height: 15),
                   const LoginField(hintText: 'Sobrenome'),
                   const SizedBox(height: 15),
@@ -48,7 +50,8 @@ class RegisterPage extends StatelessWidget {
                   const SizedBox(height: 15),
                   GradientButton(
                     onPressed: () {
-                      Navigator.pop;
+                      final Nome = _nome.text;
+                      CreateUser(nome: Nome, context: context);
                     },
                     text: 'Cadastrar',
                   ),
@@ -75,4 +78,38 @@ class RegisterPage extends StatelessWidget {
       ),
     ));
   }
+
+  Future CreateUser(
+      {required String nome, required BuildContext context}) async {
+    final docUser = FirebaseFirestore.instance.collection('users').doc();
+    final user = User(
+      id: 12,
+      nome: nome,
+      email: 'maria@mmm.com',
+      cpf: 05410067885,
+      senha: 'petstttss',
+    );
+    final json = user.toJson();
+
+    await docUser.set(json);
+    Navigator.pop(context);
+  }
+}
+
+class User {
+  final int id;
+  final String nome;
+  final String email;
+  final int cpf;
+  final String senha;
+
+  User(
+      {required this.id,
+      required this.nome,
+      required this.email,
+      required this.cpf,
+      required this.senha});
+
+  Map<String, dynamic> toJson() =>
+      {'Id': id, 'Nome': nome, 'E-mail': email, 'CPF': cpf, 'Senha': senha};
 }
