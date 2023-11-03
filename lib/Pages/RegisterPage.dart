@@ -34,8 +34,6 @@ class RegisterPage extends StatelessWidget {
                   const SizedBox(height: 15),
                   LoginField(controller: _nome, hintText: 'Nome'),
                   const SizedBox(height: 15),
-                  const LoginField(hintText: 'Sobrenome'),
-                  const SizedBox(height: 15),
                   const LoginField(hintText: 'Telefone'),
                   const SizedBox(height: 15),
                   const LoginField(hintText: 'CPF'),
