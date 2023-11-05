@@ -30,7 +30,7 @@ class _LoginPageState extends State<LoginPage> {
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text('Login',
+                const Text('Lackstage',
                     style:
                         TextStyle(fontWeight: FontWeight.bold, fontSize: 50)),
                 Image.asset(
