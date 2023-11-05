@@ -58,16 +58,10 @@ class _RegisterPageState extends State<RegisterPage> {
               GradientButton(
                 onPressed: () {
                   final nome = _nome.text;
-                  final telefone = _telefone.text;
-                  final cpf = _cpf.text;
                   final email = _email.text;
                   final senha = _senha.text;
                   _authUser.cadastrarUsuario(
-                      nome: nome,
-                      email: email,
-                      telefone: telefone,
-                      cpf: cpf,
-                      senha: senha);
+                      nome: nome, email: email, senha: senha);
                   Navigator.pop(context);
                 },
                 text: 'Cadastrar',

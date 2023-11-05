@@ -5,8 +5,6 @@ class authUser {
   cadastrarUsuario(
       {required String nome,
       required String email,
-      required String telefone,
-      required String cpf,
       required String senha}) async {
     UserCredential userCredential = await _firebaseAuth
         .createUserWithEmailAndPassword(email: email, password: senha);
