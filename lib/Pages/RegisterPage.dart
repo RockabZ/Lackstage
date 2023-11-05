@@ -1,5 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:lackstage/Services/Firebase/Auth.dart';
 import 'package:lackstage/ui/login_field.dart';
 import '../ui/social_button.dart';
 import 'package:lackstage/ui/gradient_button.dart';
@@ -10,6 +10,8 @@ class RegisterPage extends StatelessWidget {
   final TextEditingController _cpf = TextEditingController();
   final TextEditingController _email = TextEditingController();
   final TextEditingController _senha = TextEditingController();
+
+  authUser _authUser = authUser();
 
   RegisterPage({super.key});
 
@@ -54,18 +56,18 @@ class RegisterPage extends StatelessWidget {
                   const SizedBox(height: 15),
                   GradientButton(
                     onPressed: () {
-                      final Nome = _nome.text;
+                      final nome = _nome.text;
                       final telefone = _telefone.text;
                       final cpf = _cpf.text;
                       final email = _email.text;
                       final senha = _senha.text;
-                      CreateUser(
-                          nome: Nome,
+                      _authUser.cadastrarUsuario(
+                          nome: nome,
                           email: email,
                           telefone: telefone,
                           cpf: cpf,
-                          senha: senha,
-                          context: context);
+                          senha: senha);
+                      Navigator.pop(context);
                     },
                     text: 'Cadastrar',
                   ),
@@ -92,52 +94,4 @@ class RegisterPage extends StatelessWidget {
       ),
     ));
   }
-
-  Future CreateUser(
-      {required String nome,
-      required String email,
-      required String telefone,
-      required String cpf,
-      required String senha,
-      required BuildContext context}) async {
-    final docUser = FirebaseFirestore.instance.collection('users').doc();
-    final user = User(
-      id: docUser.id,
-      nome: nome,
-      telefone: telefone,
-      email: email,
-      cpf: cpf,
-      senha: senha,
-    );
-    final json = user.toJson();
-
-    await docUser.set(json);
-    Navigator.pop(context);
-  }
-}
-
-class User {
-  final String id;
-  final String nome;
-  final String telefone;
-  final String email;
-  final String cpf;
-  final String senha;
-
-  User(
-      {required this.id,
-      required this.nome,
-      required this.telefone,
-      required this.email,
-      required this.cpf,
-      required this.senha});
-
-  Map<String, dynamic> toJson() => {
-        'Id': id,
-        'Nome': nome,
-        'Telefone': telefone,
-        'E-mail': email,
-        'CPF': cpf,
-        'Senha': senha
-      };
 }
