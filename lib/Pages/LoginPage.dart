@@ -59,10 +59,8 @@ class _LoginPageState extends State<LoginPage> {
                         .then((String? erro) {
                       if (erro != null) {
                         print(erro);
-                      }
+                      } else {}
                     });
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => HomePage()));
                   },
                   text: 'Entrar',
                 ),
