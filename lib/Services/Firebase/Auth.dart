@@ -24,4 +24,8 @@ class authUser {
       return e.message;
     }
   }
+
+  Future<void> deslogar() async {
+    return _firebaseAuth.signOut();
+  }
 }

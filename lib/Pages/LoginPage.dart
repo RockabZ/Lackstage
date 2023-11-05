@@ -3,7 +3,6 @@ import 'package:lackstage/Services/Firebase/Auth.dart';
 import 'package:lackstage/ui/gradient_button.dart';
 import 'package:lackstage/ui/login_field.dart';
 import '../ui/social_button.dart';
-import 'HomePage.dart';
 import 'RegisterPage.dart';
 
 class LoginPage extends StatefulWidget {
