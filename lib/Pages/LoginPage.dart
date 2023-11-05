@@ -1,12 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:lackstage/Services/Firebase/Auth.dart';
 import 'package:lackstage/ui/gradient_button.dart';
 import 'package:lackstage/ui/login_field.dart';
 import '../ui/social_button.dart';
 import 'HomePage.dart';
 import 'RegisterPage.dart';
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+class LoginPage extends StatefulWidget {
+  LoginPage({super.key});
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final TextEditingController _email = TextEditingController();
+
+  final TextEditingController _senha = TextEditingController();
+
+  authUser _authUser = authUser();
 
   @override
   Widget build(BuildContext context) {
@@ -30,15 +42,25 @@ class LoginPage extends StatelessWidget {
                   height: 50,
                 ),
                 const SizedBox(height: 15),
-                const LoginField(hintText: 'Email'),
+                LoginField(controller: _email, hintText: 'Email'),
                 const SizedBox(height: 15),
-                const LoginField(
+                LoginField(
+                  controller: _senha,
                   hintText: 'Senha',
                   obscureText: true,
                 ),
                 const SizedBox(height: 20),
                 GradientButton(
                   onPressed: () {
+                    final email = _email.text;
+                    final senha = _senha.text;
+                    _authUser
+                        .logarUsuario(email: email, senha: senha)
+                        .then((String? erro) {
+                      if (erro != null) {
+                        print(erro);
+                      }
+                    });
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => HomePage()));
                   },

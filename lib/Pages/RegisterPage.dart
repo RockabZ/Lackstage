@@ -4,16 +4,25 @@ import 'package:lackstage/ui/login_field.dart';
 import '../ui/social_button.dart';
 import 'package:lackstage/ui/gradient_button.dart';
 
-class RegisterPage extends StatelessWidget {
+class RegisterPage extends StatefulWidget {
+  RegisterPage({super.key});
+
+  @override
+  State<RegisterPage> createState() => _RegisterPageState();
+}
+
+class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _nome = TextEditingController();
+
   final TextEditingController _telefone = TextEditingController();
+
   final TextEditingController _cpf = TextEditingController();
+
   final TextEditingController _email = TextEditingController();
+
   final TextEditingController _senha = TextEditingController();
 
   authUser _authUser = authUser();
-
-  RegisterPage({super.key});
 
   @override
   Widget build(BuildContext context) {
