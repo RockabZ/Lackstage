@@ -7,7 +7,10 @@ class authUser {
       required String email,
       required String telefone,
       required String cpf,
-      required String senha}) {
-    _firebaseAuth.createUserWithEmailAndPassword(email: email, password: senha);
+      required String senha}) async {
+    UserCredential userCredential = await _firebaseAuth
+        .createUserWithEmailAndPassword(email: email, password: senha);
+
+    await userCredential.user!.updateDisplayName(nome);
   }
 }
