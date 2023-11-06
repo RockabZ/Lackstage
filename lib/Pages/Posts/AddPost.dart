@@ -1,7 +1,9 @@
+import 'dart:io';
+
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:lackstage/Constants.dart';
 import 'package:lackstage/Pallete.dart';
+import 'package:lackstage/Utils.dart';
 
 class AddPostPage extends StatefulWidget {
   const AddPostPage({super.key});
@@ -11,6 +13,13 @@ class AddPostPage extends StatefulWidget {
 }
 
 class _AddPostPageState extends State<AddPostPage> {
+  List<File> images = [];
+
+  void onPickImages() async {
+    images = await pickImages();
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,12 +31,24 @@ class _AddPostPageState extends State<AddPostPage> {
           },
           icon: const Icon(Icons.close, size: 30),
         ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(8.0).copyWith(left: 15, right: 15),
+            child: GestureDetector(
+                onTap: onPickImages,
+                child: const Icon(Icons.add_photo_alternate_outlined)),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0).copyWith(left: 15, right: 15),
+            child: const Icon(Icons.add_reaction_outlined),
+          )
+        ],
       ),
-      body: const SafeArea(
+      body: SafeArea(
           child: SingleChildScrollView(
         child: Column(
           children: [
-            Row(
+            const Row(
               children: [
                 CircleAvatar(
                   backgroundImage: NetworkImage(
@@ -50,25 +71,28 @@ class _AddPostPageState extends State<AddPostPage> {
                   ),
                 )
               ],
-            )
+            ),
+            if (images.isNotEmpty)
+              CarouselSlider(
+                items: images.map(
+                  (file) {
+                    return Container(
+                        width: MediaQuery.of(context).size.width,
+                        margin: const EdgeInsets.symmetric(horizontal: 5),
+                        child: Image.file(file));
+                  },
+                ).toList(),
+                options: CarouselOptions(
+                  height: 400,
+                  enableInfiniteScroll: false,
+                ),
+              )
           ],
         ),
       )),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
         child: const Icon(Icons.add),
-      ),
-      bottomNavigationBar: Row(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0).copyWith(left: 15, right: 15),
-            child: const Icon(Icons.add_photo_alternate_outlined),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0).copyWith(left: 15, right: 15),
-            child: const Icon(Icons.add_reaction_outlined),
-          )
-        ],
       ),
     );
   }
