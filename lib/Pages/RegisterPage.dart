@@ -5,7 +5,7 @@ import '../ui/social_button.dart';
 import 'package:lackstage/ui/gradient_button.dart';
 
 class RegisterPage extends StatefulWidget {
-  RegisterPage({super.key});
+  const RegisterPage({super.key});
 
   @override
   State<RegisterPage> createState() => _RegisterPageState();
@@ -13,10 +13,6 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _nome = TextEditingController();
-
-  final TextEditingController _telefone = TextEditingController();
-
-  final TextEditingController _cpf = TextEditingController();
 
   final TextEditingController _email = TextEditingController();
 

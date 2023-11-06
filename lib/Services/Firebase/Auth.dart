@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class authUser {
@@ -10,6 +11,7 @@ class authUser {
         .createUserWithEmailAndPassword(email: email, password: senha);
 
     await userCredential.user!.updateDisplayName(nome);
+    createUserDocument(userCredential, nome);
   }
 
   Future<String?> logarUsuario(
@@ -25,5 +27,18 @@ class authUser {
 
   Future<void> deslogar() async {
     return _firebaseAuth.signOut();
+  }
+}
+
+Future<void> createUserDocument(
+    UserCredential? userCredential, String nome) async {
+  if (userCredential != null && userCredential.user != null) {
+    await FirebaseFirestore.instance
+        .collection('Users')
+        .doc(userCredential.user!.email)
+        .set({
+      'email': userCredential.user!.email,
+      'nome': nome,
+    });
   }
 }
