@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:lackstage/Pages/Posts/AddPost_Controller.dart';
 import 'package:lackstage/Pallete.dart';
 import 'package:lackstage/Utils.dart';
 
@@ -14,6 +15,8 @@ class AddPostPage extends StatefulWidget {
 
 class _AddPostPageState extends State<AddPostPage> {
   List<File> images = [];
+  PostController postar = PostController();
+  final TextEditingController _text = TextEditingController();
 
   void onPickImages() async {
     images = await pickImages();
@@ -48,9 +51,9 @@ class _AddPostPageState extends State<AddPostPage> {
           child: SingleChildScrollView(
         child: Column(
           children: [
-            const Row(
+            Row(
               children: [
-                CircleAvatar(
+                const CircleAvatar(
                   backgroundImage: NetworkImage(
                       'https://cdn-icons-png.flaticon.com/512/1816/1816466.png'),
                   radius: 30,
@@ -58,8 +61,9 @@ class _AddPostPageState extends State<AddPostPage> {
                 SizedBox(width: 15),
                 Expanded(
                   child: TextField(
-                    style: TextStyle(fontSize: 22),
-                    decoration: InputDecoration(
+                    controller: _text,
+                    style: const TextStyle(fontSize: 22),
+                    decoration: const InputDecoration(
                         hintText: "O que está acontecendo?",
                         hintStyle: TextStyle(
                           color: Pallete.greyColor,
@@ -91,7 +95,9 @@ class _AddPostPageState extends State<AddPostPage> {
         ),
       )),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          postar.SharePost(images: images, text: _text.text, context: context);
+        },
         child: const Icon(Icons.add),
       ),
     );
