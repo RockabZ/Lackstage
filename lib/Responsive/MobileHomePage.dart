@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:lackstage/Constants.dart';
 import 'package:lackstage/Pages/Posts/AddPost.dart';
 import 'package:lackstage/Services/Firebase/GetPosts.dart';
+import 'package:lackstage/ui/PostCard.dart';
 
 class MobileHomePage extends StatefulWidget {
   const MobileHomePage({super.key});
@@ -58,10 +59,8 @@ class _HomePageState extends State<MobileHomePage> {
                     Timestamp timestamp = post['TimeStamp'];
 
                     // return as a list tile
-                    return ListTile(
-                      title: Text(text),
-                      subtitle: Text(user),
-                    );
+                    return postCard(
+                        user, text, curtidas, reposts, comentarios, timestamp);
                   },
                 ),
               );

@@ -12,7 +12,7 @@ class GetPosts {
   Stream<QuerySnapshot> getPostsStream() {
     final postsStream = FirebaseFirestore.instance
         .collection('Posts')
-        //.orderBy('TimesTamp', descending: true)
+        .orderBy('TimeStamp', descending: true)
         .snapshots();
     return postsStream;
   }
