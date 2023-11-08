@@ -20,7 +20,7 @@ class PostIconButton extends StatelessWidget {
         children: [
           SvgPicture.asset(
             pathname,
-            color: Pallete.greyColor,
+            color: Pallete.borderColor,
           ),
           Container(
             margin: const EdgeInsets.all(6),
@@ -28,6 +28,7 @@ class PostIconButton extends StatelessWidget {
               text,
               style: const TextStyle(
                 fontSize: 16,
+                color: Pallete.greyColor,
               ),
             ),
           )

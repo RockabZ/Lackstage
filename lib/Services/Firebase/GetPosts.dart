@@ -16,4 +16,21 @@ class GetPosts {
         .snapshots();
     return postsStream;
   }
+
+  Future<void> likePost(String id) async {
+    await posts.doc(id).get().then((doc) async {
+      final List<dynamic> curtidas =
+          (doc.data() as Map<String, dynamic>)['Curtidas'];
+      if (curtidas.contains(user!.displayName)) {
+        await posts.doc(id).update({
+          'Curtidas': FieldValue.arrayRemove([user!.displayName])
+        });
+      } else {
+        await posts.doc(id).update({
+          'Curtidas': FieldValue.arrayUnion([user!.displayName])
+        });
+      }
+      return curtidas;
+    });
+  }
 }

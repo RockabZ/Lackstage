@@ -46,7 +46,7 @@ class PostController {
     await FirebaseFirestore.instance.collection('Posts').doc().set({
       'Autor': user!.displayName,
       'Text': text,
-      'Curtidas': 0,
+      'Curtidas': [],
       'Reposts': 0,
       'Comentarios': 0,
       'TimeStamp': Timestamp.now(),

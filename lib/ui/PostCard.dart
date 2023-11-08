@@ -1,13 +1,21 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lackstage/Constants.dart';
 import 'package:lackstage/Pallete.dart';
+import 'package:lackstage/Services/Firebase/GetPosts.dart';
 import 'package:lackstage/Services/hashtag_text.dart';
 import 'package:lackstage/ui/Post_Icon_Buttons.dart';
+import 'package:like_button/like_button.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
-Widget postCard(String nome, String text, int curtidas, int reposts,
-    int comentarios, Timestamp timestamp) {
+Widget postCard(String id, String nome, String text, List<dynamic> curtidas,
+    int reposts, int comentarios, Timestamp timestamp) {
+  User? user = FirebaseAuth.instance.currentUser;
+
+  final GetPosts database = GetPosts();
+
   return Column(
     children: [
       Row(
@@ -65,10 +73,34 @@ Widget postCard(String nome, String text, int curtidas, int reposts,
                           pathname: AssetsConstants.repostIcon,
                           text: reposts.toString(),
                           onTap: () {}),
-                      PostIconButton(
-                          pathname: AssetsConstants.likeOutlinedIcon,
-                          text: curtidas.toString(),
-                          onTap: () {}),
+                      LikeButton(
+                        onTap: (isLiked) async {
+                          database.likePost(id);
+                          return !isLiked;
+                        },
+                        size: 25,
+                        isLiked: curtidas.contains(user!.displayName),
+                        likeCount: curtidas.length,
+                        likeBuilder: ((isLiked) {
+                          return isLiked
+                              ? SvgPicture.asset(
+                                  AssetsConstants.likeFilledIcon,
+                                  color: Pallete.gradient2,
+                                )
+                              : SvgPicture.asset(
+                                  AssetsConstants.likeOutlinedIcon,
+                                  color: Pallete.borderColor,
+                                );
+                        }),
+                      ),
+                      IconButton(
+                        onPressed: () {},
+                        icon: const Icon(
+                          Icons.share_outlined,
+                          size: 25,
+                          color: Pallete.borderColor,
+                        ),
+                      )
                     ],
                   ),
                 ),

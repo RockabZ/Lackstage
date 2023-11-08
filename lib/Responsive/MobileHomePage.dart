@@ -51,16 +51,17 @@ class _HomePageState extends State<MobileHomePage> {
                     final post = posts[index];
 
                     // get data from each post
+                    String id = post.id;
                     String text = post['Text'];
                     String user = post['Autor'];
-                    int curtidas = post['Curtidas'];
+                    List<dynamic> curtidas = post['Curtidas'];
                     int comentarios = post['Comentarios'];
                     int reposts = post['Reposts'];
                     Timestamp timestamp = post['TimeStamp'];
 
                     // return as a list tile
-                    return postCard(
-                        user, text, curtidas, reposts, comentarios, timestamp);
+                    return postCard(id, user, text, curtidas, reposts,
+                        comentarios, timestamp);
                   },
                 ),
               );
