@@ -1,0 +1,99 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+import 'package:lackstage/Constants.dart';
+import 'package:lackstage/Pages/Posts/AddPost_Controller.dart';
+import 'package:lackstage/Services/Firebase/GetPosts.dart';
+import 'package:lackstage/ui/PostCard.dart';
+
+class ReplyScreen extends StatelessWidget {
+  final String id;
+  final String nome;
+  final String text;
+  final List<dynamic> curtidas;
+  final int reposts;
+  final int comentarios;
+  final Timestamp timestamp;
+  final String repliedto;
+  const ReplyScreen(
+      {super.key,
+      required this.comentarios,
+      required this.curtidas,
+      required this.id,
+      required this.nome,
+      required this.reposts,
+      required this.text,
+      required this.timestamp,
+      required this.repliedto});
+
+  @override
+  Widget build(BuildContext context) {
+    final GetPosts database = GetPosts();
+    PostController postar = PostController();
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: const Text('Post'),
+      ),
+      drawer: myDrawer,
+      body: Column(
+        children: [
+          postCard(id, nome, text, curtidas, reposts, comentarios, timestamp,
+              context, repliedto),
+          StreamBuilder(
+            stream: database.getRepliesPostsStream(id),
+            builder: (context, snapshot) {
+              //show loading circle
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              //get all posts
+              final posts = snapshot.data!.docs;
+              //no data
+              if (snapshot.data == null || posts.isEmpty) {
+                return const Center(
+                  child: Padding(
+                    padding: EdgeInsets.all(25),
+                    child: Text('Nenhum comentário no momento... Comente algo'),
+                  ),
+                );
+              }
+
+              // return as a list
+              return Expanded(
+                child: ListView.builder(
+                  itemCount: posts.length,
+                  itemBuilder: (context, index) {
+                    // get individual post
+                    final post = posts[index];
+
+                    // get data from each post
+                    String idr = post.id;
+                    String textr = post['Text'];
+                    String userr = post['Autor'];
+                    String repliedtor = post['RepliedTo'];
+                    List<dynamic> curtidasr = post['Curtidas'];
+                    int comentariosr = post['Comentarios'];
+                    int repostsr = post['Reposts'];
+                    Timestamp timestampr = post['TimeStamp'];
+
+                    // return as a list tile
+                    return postCard(idr, userr, textr, curtidasr, repostsr,
+                        comentariosr, timestampr, context, repliedtor);
+                  },
+                ),
+              );
+            },
+          )
+        ],
+      ),
+      bottomNavigationBar: TextField(
+          onSubmitted: (value) {
+            postar.SharePost(
+                repliedto: id, images: [], text: value, context: context);
+          },
+          decoration: const InputDecoration(hintText: 'Poste sua reposta')),
+    );
+  }
+}

@@ -8,6 +8,7 @@ import 'package:lackstage/Utils.dart';
 class PostController {
   User? user = FirebaseAuth.instance.currentUser;
   void SharePost({
+    required String repliedto,
     required List<File> images,
     required String text,
     required BuildContext context,
@@ -19,7 +20,7 @@ class PostController {
     if (images.isNotEmpty) {
       _shareImagePost(images: images, text: text, context: context);
     } else {
-      _shareTextPost(text: text, context: context);
+      _shareTextPost(text: text, context: context, repliedto: repliedto);
     }
   }
 
@@ -42,6 +43,7 @@ class PostController {
   Future<void> _shareTextPost({
     required String text,
     required BuildContext context,
+    required String repliedto,
   }) async {
     await FirebaseFirestore.instance.collection('Posts').doc().set({
       'Autor': user!.displayName,
@@ -50,6 +52,7 @@ class PostController {
       'Reposts': 0,
       'Comentarios': 0,
       'TimeStamp': Timestamp.now(),
+      'RepliedTo': repliedto,
     });
     // ignore: use_build_context_synchronously
     Navigator.pop(context);

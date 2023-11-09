@@ -17,6 +17,15 @@ class GetPosts {
     return postsStream;
   }
 
+  Stream<QuerySnapshot> getRepliesPostsStream(String id) {
+    final postsRepliesStream = FirebaseFirestore.instance
+        .collection('Posts')
+        .where('RepliedTo', isEqualTo: id)
+        .snapshots();
+
+    return postsRepliesStream;
+  }
+
   Future<void> likePost(String id) async {
     await posts.doc(id).get().then((doc) async {
       final List<dynamic> curtidas =

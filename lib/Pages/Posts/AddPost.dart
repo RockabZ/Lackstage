@@ -96,7 +96,11 @@ class _AddPostPageState extends State<AddPostPage> {
       )),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          postar.SharePost(images: images, text: _text.text, context: context);
+          postar.SharePost(
+              images: images,
+              text: _text.text,
+              context: context,
+              repliedto: '');
         },
         child: const Icon(Icons.add),
       ),
