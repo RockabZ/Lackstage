@@ -14,6 +14,9 @@ class PostController {
     required BuildContext context,
     required String autorreply,
   }) {
+    if (repliedto.isNotEmpty) {
+      _incrementComent(id: repliedto);
+    }
     if (text.isEmpty) {
       showSnackBar(context, 'Digite algo');
       return;
@@ -27,6 +30,13 @@ class PostController {
           repliedto: repliedto,
           autor: autorreply);
     }
+  }
+
+  void _incrementComent({required String id}) async {
+    await FirebaseFirestore.instance
+        .collection('Posts')
+        .doc(id)
+        .update({'Comentarios': FieldValue.increment(1)});
   }
 
   void _shareImagePost({

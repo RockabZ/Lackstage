@@ -92,7 +92,14 @@ Widget postCard(
                             color: Pallete.borderColor,
                             fontSize: 16,
                           ),
-                          children: [TextSpan(text: autorreply)]),
+                          children: [
+                            TextSpan(
+                                text: ' ${autorreply}',
+                                style: const TextStyle(
+                                  color: Pallete.blueColor,
+                                  fontSize: 16,
+                                ))
+                          ]),
                     ),
                   HastagText(text: text),
 
