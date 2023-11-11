@@ -17,6 +17,14 @@ class GetPosts {
     return postsStream;
   }
 
+  Stream<QuerySnapshot> getPostsUser(String nome) {
+    final postsStream = FirebaseFirestore.instance
+        .collection('Posts')
+        .where('Autor', isEqualTo: nome)
+        .snapshots();
+    return postsStream;
+  }
+
   Stream<QuerySnapshot> getRepliesPostsStream(String id) {
     final postsRepliesStream = FirebaseFirestore.instance
         .collection('Posts')

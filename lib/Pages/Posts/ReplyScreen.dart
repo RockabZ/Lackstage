@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:lackstage/Constants.dart';
 import 'package:lackstage/Pages/Posts/AddPost_Controller.dart';
 import 'package:lackstage/Services/Firebase/GetPosts.dart';
 import 'package:lackstage/ui/PostCard.dart';
@@ -36,7 +35,6 @@ class ReplyScreen extends StatelessWidget {
         centerTitle: true,
         title: const Text('Post'),
       ),
-      drawer: myDrawer,
       body: Column(
         children: [
           postCard(id, nome, text, curtidas, reposts, comentarios, timestamp,

@@ -1,8 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lackstage/Constants.dart';
 import 'package:lackstage/Pages/Posts/AddPost.dart';
+import 'package:lackstage/Pages/user_profile.dart';
 import 'package:lackstage/Pallete.dart';
+import 'package:lackstage/Services/Firebase/Auth.dart';
 
 class MobileHomePage extends StatefulWidget {
   const MobileHomePage({super.key});
@@ -22,9 +25,48 @@ class _HomePageState extends State<MobileHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    User? user = FirebaseAuth.instance.currentUser;
+
     return Scaffold(
       appBar: _page == 0 ? myAppBar : null,
-      drawer: myDrawer,
+      drawer: Drawer(
+        child: Column(children: [
+          DrawerHeader(
+              child: Image.asset(
+            'assets/images/Logo.png',
+            height: 75,
+          )),
+          ListTile(
+            leading: const Icon(Icons.account_box_outlined),
+            title: const Text('Perfil'),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        UserProfile(nome: user!.displayName.toString()),
+                  ));
+            },
+          ),
+          Expanded(
+            child: Align(
+              alignment: FractionalOffset.bottomCenter,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ListTile(
+                  leading: const Icon(Icons.logout),
+                  iconColor: Pallete.redColor,
+                  title: const Text('Deslogar',
+                      style: TextStyle(color: Pallete.redColor)),
+                  onTap: () {
+                    authUser().deslogar();
+                  },
+                ),
+              ),
+            ),
+          )
+        ]),
+      ),
       body: IndexedStack(
           index: _page, children: AssetsConstants.bottomTabBarPages),
       floatingActionButton: FloatingActionButton(
