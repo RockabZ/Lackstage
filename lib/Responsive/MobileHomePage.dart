@@ -23,7 +23,7 @@ class _HomePageState extends State<MobileHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: myAppBar,
+      appBar: _page == 0 ? myAppBar : null,
       drawer: myDrawer,
       body: IndexedStack(
           index: _page, children: AssetsConstants.bottomTabBarPages),

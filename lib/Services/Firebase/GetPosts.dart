@@ -26,6 +26,16 @@ class GetPosts {
     return postsRepliesStream;
   }
 
+  Stream<QuerySnapshot> getPerfilsBySearch(String nome) {
+    final perfilsSearchStram = FirebaseFirestore.instance
+        .collection('Users')
+        .where('nome', isGreaterThanOrEqualTo: nome)
+        .where('nome', isLessThan: nome + '\uf8ff')
+        .snapshots();
+
+    return perfilsSearchStram;
+  }
+
   Future<void> likePost(String id) async {
     await posts.doc(id).get().then((doc) async {
       final List<dynamic> curtidas =
