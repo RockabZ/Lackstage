@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lackstage/Pallete.dart';
 import 'package:lackstage/Services/Firebase/Auth.dart';
+import 'package:lackstage/ui/post_list.dart';
 
 var myAppBar = AppBar(
   centerTitle: true,
@@ -50,4 +51,11 @@ class AssetsConstants {
   static const String repostIcon = '$_svgsPath/repost.svg';
   static const String likeOutlinedIcon = '$_svgsPath/like_outlined.svg';
   static const String likeFilledIcon = '$_svgsPath/like_filled.svg';
+
+  static List<Widget> bottomTabBarPages = [
+    const PostList(),
+    const Text('Search screen'),
+    const Text('Notification Screen'),
+    const Text('Chat Screen'),
+  ];
 }
