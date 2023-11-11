@@ -59,10 +59,11 @@ class _HomePageState extends State<MobileHomePage> {
                     int reposts = post['Reposts'];
                     Timestamp timestamp = post['TimeStamp'];
                     String repliedto = post['RepliedTo'];
-
+                    String autorreply = post['AutorReply'];
                     // return as a list tile
+
                     return postCard(id, user, text, curtidas, reposts,
-                        comentarios, timestamp, context, repliedto);
+                        comentarios, timestamp, context, repliedto, autorreply);
                   },
                 ),
               );

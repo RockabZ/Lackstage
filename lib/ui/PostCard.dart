@@ -20,7 +20,8 @@ Widget postCard(
     int comentarios,
     Timestamp timestamp,
     BuildContext context,
-    String repliedto) {
+    String repliedto,
+    String autorreply) {
   User? user = FirebaseAuth.instance.currentUser;
 
   final GetPosts database = GetPosts();
@@ -39,6 +40,7 @@ Widget postCard(
               text: text,
               timestamp: timestamp,
               repliedto: repliedto,
+              autorReply: autorreply,
             ),
           ));
     },
@@ -84,17 +86,13 @@ Widget postCard(
                   ),
                   if (repliedto.isNotEmpty)
                     RichText(
-                      text: const TextSpan(
+                      text: TextSpan(
                           text: 'Resposta a',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Pallete.borderColor,
                             fontSize: 16,
                           ),
-                          children: [
-                            //TextSpan(
-                            //  text:
-                            // )
-                          ]),
+                          children: [TextSpan(text: autorreply)]),
                     ),
                   HastagText(text: text),
 

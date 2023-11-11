@@ -100,7 +100,8 @@ class _AddPostPageState extends State<AddPostPage> {
               images: images,
               text: _text.text,
               context: context,
-              repliedto: '');
+              repliedto: '',
+              autorreply: '');
         },
         child: const Icon(Icons.add),
       ),

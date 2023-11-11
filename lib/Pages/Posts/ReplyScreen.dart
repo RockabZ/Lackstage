@@ -14,6 +14,7 @@ class ReplyScreen extends StatelessWidget {
   final int comentarios;
   final Timestamp timestamp;
   final String repliedto;
+  final String autorReply;
   const ReplyScreen(
       {super.key,
       required this.comentarios,
@@ -23,7 +24,8 @@ class ReplyScreen extends StatelessWidget {
       required this.reposts,
       required this.text,
       required this.timestamp,
-      required this.repliedto});
+      required this.repliedto,
+      required this.autorReply});
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +40,7 @@ class ReplyScreen extends StatelessWidget {
       body: Column(
         children: [
           postCard(id, nome, text, curtidas, reposts, comentarios, timestamp,
-              context, repliedto),
+              context, repliedto, autorReply),
           StreamBuilder(
             stream: database.getRepliesPostsStream(id),
             builder: (context, snapshot) {
@@ -77,10 +79,20 @@ class ReplyScreen extends StatelessWidget {
                     int comentariosr = post['Comentarios'];
                     int repostsr = post['Reposts'];
                     Timestamp timestampr = post['TimeStamp'];
+                    String autorReply = post['AutorReply'];
 
                     // return as a list tile
-                    return postCard(idr, userr, textr, curtidasr, repostsr,
-                        comentariosr, timestampr, context, repliedtor);
+                    return postCard(
+                        idr,
+                        userr,
+                        textr,
+                        curtidasr,
+                        repostsr,
+                        comentariosr,
+                        timestampr,
+                        context,
+                        repliedtor,
+                        autorReply);
                   },
                 ),
               );
@@ -91,7 +103,11 @@ class ReplyScreen extends StatelessWidget {
       bottomNavigationBar: TextField(
           onSubmitted: (value) {
             postar.SharePost(
-                repliedto: id, images: [], text: value, context: context);
+                repliedto: id,
+                images: [],
+                text: value,
+                context: context,
+                autorreply: nome);
           },
           decoration: const InputDecoration(hintText: 'Poste sua reposta')),
     );

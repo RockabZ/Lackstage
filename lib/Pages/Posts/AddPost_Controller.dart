@@ -12,6 +12,7 @@ class PostController {
     required List<File> images,
     required String text,
     required BuildContext context,
+    required String autorreply,
   }) {
     if (text.isEmpty) {
       showSnackBar(context, 'Digite algo');
@@ -20,7 +21,11 @@ class PostController {
     if (images.isNotEmpty) {
       _shareImagePost(images: images, text: text, context: context);
     } else {
-      _shareTextPost(text: text, context: context, repliedto: repliedto);
+      _shareTextPost(
+          text: text,
+          context: context,
+          repliedto: repliedto,
+          autor: autorreply);
     }
   }
 
@@ -44,6 +49,7 @@ class PostController {
     required String text,
     required BuildContext context,
     required String repliedto,
+    required String autor,
   }) async {
     await FirebaseFirestore.instance.collection('Posts').doc().set({
       'Autor': user!.displayName,
@@ -53,6 +59,7 @@ class PostController {
       'Comentarios': 0,
       'TimeStamp': Timestamp.now(),
       'RepliedTo': repliedto,
+      'AutorReply': autor,
     });
     // ignore: use_build_context_synchronously
     Navigator.pop(context);
