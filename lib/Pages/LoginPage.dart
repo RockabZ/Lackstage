@@ -54,7 +54,8 @@ class _LoginPageState extends State<LoginPage> {
                     final email = _email.text;
                     final senha = _senha.text;
                     _authUser
-                        .logarUsuario(email: email, senha: senha)
+                        .logarUsuario(
+                            email: email, senha: senha, context: context)
                         .then((String? erro) {
                       if (erro != null) {
                         print(erro);

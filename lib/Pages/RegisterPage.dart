@@ -18,7 +18,9 @@ class _RegisterPageState extends State<RegisterPage> {
 
   final TextEditingController _senha = TextEditingController();
 
-  authUser _authUser = authUser();
+  final _usuario = TextEditingController();
+
+  final authUser _authUser = authUser();
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +44,8 @@ class _RegisterPageState extends State<RegisterPage> {
               const SizedBox(height: 15),
               LoginField(controller: _nome, hintText: 'Nome Completo'),
               const SizedBox(height: 15),
+              LoginField(controller: _usuario, hintText: 'Nome de Usuário'),
+              const SizedBox(height: 15),
               LoginField(controller: _email, hintText: 'Email'),
               const SizedBox(height: 15),
               LoginField(
@@ -56,9 +60,13 @@ class _RegisterPageState extends State<RegisterPage> {
                   final nome = _nome.text;
                   final email = _email.text;
                   final senha = _senha.text;
+                  final usuario = _usuario.text;
                   _authUser.cadastrarUsuario(
-                      nome: nome, email: email, senha: senha);
-                  Navigator.pop(context);
+                      nome: nome,
+                      email: email,
+                      senha: senha,
+                      usuario: usuario,
+                      context: context);
                 },
                 text: 'Cadastrar',
               ),

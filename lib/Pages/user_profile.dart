@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:lackstage/Pages/edit_profile.dart';
 import 'package:lackstage/Pallete.dart';
 import 'package:lackstage/Services/Firebase/GetPosts.dart';
 import 'package:lackstage/ui/PostCard.dart';
@@ -25,7 +26,14 @@ class UserProfile extends StatelessWidget {
                   padding:
                       const EdgeInsets.all(8.0).copyWith(left: 15, right: 15),
                   child: GestureDetector(
-                      onTap: () {}, child: const Icon(Icons.create_outlined)),
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => EditProfile(),
+                            ));
+                      },
+                      child: const Icon(Icons.create_outlined)),
                 )
               : Padding(
                   padding:
