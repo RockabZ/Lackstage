@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lackstage/Pallete.dart';
 import 'package:lackstage/ui/chat_function.dart';
 import 'package:lackstage/ui/explore_view.dart';
+import 'package:lackstage/ui/notification_function.dart';
 import 'package:lackstage/ui/post_list.dart';
 
 var myAppBar = AppBar(
@@ -20,7 +21,7 @@ class AssetsConstants {
   static List<Widget> bottomTabBarPages = [
     const PostList(),
     const ExploreView(),
-    const Text('Notification Screen'),
+    const NotificationView(),
     const ChatList(),
   ];
 }

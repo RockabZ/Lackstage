@@ -1,9 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:lackstage/Services/Notification/notification_service.dart';
 
 class GetPosts {
   User? user = FirebaseAuth.instance.currentUser;
-
+  NotificationService notificationService = NotificationService();
   // get collection of posts from firebase
   final CollectionReference posts =
       FirebaseFirestore.instance.collection('Posts');
@@ -58,7 +59,7 @@ class GetPosts {
     return bio;
   }
 
-  Future<void> likePost(String id) async {
+  Future<void> likePost(String id, String autor) async {
     await posts.doc(id).get().then((doc) async {
       final List<dynamic> curtidas =
           (doc.data() as Map<String, dynamic>)['Curtidas'];
@@ -70,6 +71,10 @@ class GetPosts {
         await posts.doc(id).update({
           'Curtidas': FieldValue.arrayUnion([user!.displayName])
         });
+        if (await notificationService.checkIfNotifyExists(autor, id)) {
+          notificationService.createNotification(
+              autor, id, 'like', '${user!.displayName} curtiu o seu post');
+        }
       }
       return curtidas;
     });

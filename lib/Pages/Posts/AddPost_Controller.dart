@@ -3,9 +3,11 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:lackstage/Services/Notification/notification_service.dart';
 import 'package:lackstage/Utils.dart';
 
 class PostController {
+  NotificationService notificationService = NotificationService();
   User? user = FirebaseAuth.instance.currentUser;
   void SharePost({
     required String repliedto,
@@ -14,21 +16,24 @@ class PostController {
     required BuildContext context,
     required String autorreply,
   }) {
-    if (repliedto.isNotEmpty) {
-      _incrementComent(id: repliedto);
-    }
     if (text.isEmpty) {
       showSnackBar(context, 'Digite algo');
       return;
-    }
-    if (images.isNotEmpty) {
-      _shareImagePost(images: images, text: text, context: context);
     } else {
-      _shareTextPost(
-          text: text,
-          context: context,
-          repliedto: repliedto,
-          autor: autorreply);
+      if (repliedto.isNotEmpty) {
+        _incrementComent(id: repliedto);
+        notificationService.createNotification(autorreply, repliedto, 'comment',
+            '${user!.displayName} comentou seu Post');
+      }
+      if (images.isNotEmpty) {
+        _shareImagePost(images: images, text: text, context: context);
+      } else {
+        _shareTextPost(
+            text: text,
+            context: context,
+            repliedto: repliedto,
+            autor: autorreply);
+      }
     }
   }
 

@@ -2,8 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lackstage/Model/Message.dart';
+import 'package:lackstage/Services/Notification/notification_service.dart';
 
 class ChatService extends ChangeNotifier {
+  NotificationService notificationService = NotificationService();
+
   //get instance of auth and firestore
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -39,6 +42,9 @@ class ChatService extends ChangeNotifier {
     ids.sort();
     String chatRoomId = ids.join("_"); //combine the ids
 
+    //create notification
+    notificationService.createNotification(
+        receiverId, '', 'chat', '$currentUserId lhe enviou uma mensagem');
     //add new message to database
     await _firestore
         .collection('chat_rooms')

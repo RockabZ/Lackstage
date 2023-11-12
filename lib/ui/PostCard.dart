@@ -121,7 +121,7 @@ Widget postCard(
                             onTap: () {}),
                         LikeButton(
                           onTap: (isLiked) async {
-                            database.likePost(id);
+                            database.likePost(id, nome);
                             return !isLiked;
                           },
                           size: 25,
