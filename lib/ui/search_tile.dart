@@ -16,7 +16,11 @@ class SearchTile extends StatelessWidget {
         Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => UserProfile(nome: nome, image: image),
+              builder: (context) => UserProfile(
+                nome: nome,
+                image: image,
+                bio: bio,
+              ),
             ));
       },
       child: ListTile(

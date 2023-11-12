@@ -1,15 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:lackstage/Pages/chat_page.dart';
 import 'package:lackstage/Pages/edit_profile.dart';
 import 'package:lackstage/Pallete.dart';
+import 'package:lackstage/Services/Chat/chat_service.dart';
 import 'package:lackstage/Services/Firebase/GetPosts.dart';
 import 'package:lackstage/ui/PostCard.dart';
 
 class UserProfile extends StatefulWidget {
   final String nome;
   final String image;
-  const UserProfile({super.key, required this.nome, required this.image});
+  final String bio;
+  const UserProfile(
+      {super.key, required this.nome, required this.image, this.bio = ''});
 
   @override
   State<UserProfile> createState() => _UserProfileState();
@@ -20,6 +24,7 @@ class _UserProfileState extends State<UserProfile> {
   Widget build(BuildContext context) {
     final GetPosts database = GetPosts();
     User? user = FirebaseAuth.instance.currentUser;
+    final ChatService _chatService = ChatService();
 
     return Scaffold(
       appBar: AppBar(
@@ -45,7 +50,17 @@ class _UserProfileState extends State<UserProfile> {
                   padding:
                       const EdgeInsets.all(8.0).copyWith(left: 15, right: 15),
                   child: GestureDetector(
-                      onTap: () {}, child: const Icon(Icons.message)),
+                      onTap: () {
+                        _chatService.createChatRoom(
+                            user.displayName.toString(), widget.nome);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  ChatPage(receiverUserID: widget.nome),
+                            ));
+                      },
+                      child: const Icon(Icons.message)),
                 ),
         ],
       ),
@@ -71,18 +86,25 @@ class _UserProfileState extends State<UserProfile> {
                     fontWeight: FontWeight.bold),
                 child: Text(widget.nome),
               ),
-              FutureBuilder(
-                future: database.getBioByPerfil(user.email.toString()),
-                builder: (context, snapshot) {
-                  String bio = snapshot.data.toString();
-                  return DefaultTextStyle(
+              (widget.bio.isEmpty)
+                  ? FutureBuilder(
+                      future: database.getBioByPerfil(user.email.toString()),
+                      builder: (context, snapshot) {
+                        String bio = snapshot.data.toString();
+                        return DefaultTextStyle(
+                            style: const TextStyle(
+                                color: Pallete.greyColor,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold),
+                            child: Text(bio));
+                      },
+                    )
+                  : DefaultTextStyle(
                       style: const TextStyle(
                           color: Pallete.greyColor,
                           fontSize: 20,
                           fontWeight: FontWeight.bold),
-                      child: Text(bio));
-                },
-              ),
+                      child: Text(widget.bio)),
               const SizedBox(height: 20),
               const Text(
                 'Posts',

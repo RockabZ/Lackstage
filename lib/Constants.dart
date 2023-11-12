@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lackstage/Pallete.dart';
+import 'package:lackstage/ui/chat_function.dart';
 import 'package:lackstage/ui/explore_view.dart';
 import 'package:lackstage/ui/post_list.dart';
 
@@ -20,6 +21,6 @@ class AssetsConstants {
     const PostList(),
     const ExploreView(),
     const Text('Notification Screen'),
-    const Text('Chat Screen'),
+    const ChatList(),
   ];
 }

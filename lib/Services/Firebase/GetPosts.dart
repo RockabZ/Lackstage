@@ -44,6 +44,13 @@ class GetPosts {
     return perfilsSearchStram;
   }
 
+  Future getPerfil(String email) {
+    final perfil =
+        FirebaseFirestore.instance.collection('Users').doc(email).get();
+
+    return perfil;
+  }
+
   Future<String> getBioByPerfil(String email) async {
     var document =
         await FirebaseFirestore.instance.collection('Users').doc(email).get();
