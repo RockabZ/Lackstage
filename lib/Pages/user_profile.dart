@@ -9,9 +9,7 @@ import 'package:lackstage/ui/PostCard.dart';
 class UserProfile extends StatefulWidget {
   final String nome;
   final String image;
-  final String bio;
-  const UserProfile(
-      {super.key, required this.nome, required this.image, this.bio = ''});
+  const UserProfile({super.key, required this.nome, required this.image});
 
   @override
   State<UserProfile> createState() => _UserProfileState();
@@ -73,26 +71,18 @@ class _UserProfileState extends State<UserProfile> {
                     fontWeight: FontWeight.bold),
                 child: Text(widget.nome),
               ),
-              widget.bio == ''
-                  ? FutureBuilder(
-                      future: database.getBioByPerfil(user.email.toString()),
-                      builder: (context, snapshot) {
-                        String bio = snapshot.data.toString();
-                        return DefaultTextStyle(
-                            style: const TextStyle(
-                                color: Pallete.greyColor,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold),
-                            child: Text(bio));
-                      },
-                    )
-                  : DefaultTextStyle(
+              FutureBuilder(
+                future: database.getBioByPerfil(user.email.toString()),
+                builder: (context, snapshot) {
+                  String bio = snapshot.data.toString();
+                  return DefaultTextStyle(
                       style: const TextStyle(
                           color: Pallete.greyColor,
                           fontSize: 20,
                           fontWeight: FontWeight.bold),
-                      child: Text(widget.bio),
-                    ),
+                      child: Text(bio));
+                },
+              ),
               const SizedBox(height: 20),
               const Text(
                 'Posts',
