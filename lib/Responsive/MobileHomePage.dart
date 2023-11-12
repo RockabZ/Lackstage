@@ -43,8 +43,10 @@ class _HomePageState extends State<MobileHomePage> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) =>
-                        UserProfile(nome: user!.displayName.toString()),
+                    builder: (context) => UserProfile(
+                      nome: user!.displayName.toString(),
+                      image: user.photoURL.toString(),
+                    ),
                   ));
             },
           ),
@@ -77,7 +79,7 @@ class _HomePageState extends State<MobileHomePage> {
                 builder: (context) => const AddPostPage(),
               ));
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
       bottomNavigationBar: CupertinoTabBar(
           currentIndex: _page,

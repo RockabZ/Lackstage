@@ -70,20 +70,9 @@ class PostController {
       'TimeStamp': Timestamp.now(),
       'RepliedTo': repliedto,
       'AutorReply': autor,
+      'AImage': user!.photoURL,
     });
     // ignore: use_build_context_synchronously
     Navigator.pop(context);
-  }
-}
-
-Future<void> createTextPost(UserCredential? userCredential, String text) async {
-  if (userCredential != null && userCredential.user != null) {
-    await FirebaseFirestore.instance.collection('Posts').doc().set({
-      'Autor': userCredential.user!.displayName,
-      'Text': text,
-      'Curtidas': 0,
-      'Reposts': 0,
-      'Comentarios': 0,
-    });
   }
 }

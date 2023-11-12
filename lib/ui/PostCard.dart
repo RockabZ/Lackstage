@@ -12,16 +12,18 @@ import 'package:like_button/like_button.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 Widget postCard(
-    String id,
-    String nome,
-    String text,
-    List<dynamic> curtidas,
-    int reposts,
-    int comentarios,
-    Timestamp timestamp,
-    BuildContext context,
-    String repliedto,
-    String autorreply) {
+  String id,
+  String nome,
+  String text,
+  List<dynamic> curtidas,
+  int reposts,
+  int comentarios,
+  Timestamp timestamp,
+  BuildContext context,
+  String repliedto,
+  String autorreply,
+  String aimage,
+) {
   User? user = FirebaseAuth.instance.currentUser;
 
   final GetPosts database = GetPosts();
@@ -41,6 +43,7 @@ Widget postCard(
               timestamp: timestamp,
               repliedto: repliedto,
               autorReply: autorreply,
+              aimage: aimage,
             ),
           ));
     },
@@ -51,9 +54,8 @@ Widget postCard(
           children: [
             Container(
               margin: const EdgeInsets.all(10),
-              child: const CircleAvatar(
-                backgroundImage: NetworkImage(
-                    'https://cdn-icons-png.flaticon.com/512/1816/1816466.png'),
+              child: CircleAvatar(
+                backgroundImage: NetworkImage(aimage),
                 radius: 35,
               ),
             ),
@@ -94,7 +96,7 @@ Widget postCard(
                           ),
                           children: [
                             TextSpan(
-                                text: ' ${autorreply}',
+                                text: ' $autorreply',
                                 style: const TextStyle(
                                   color: Pallete.blueColor,
                                   fontSize: 16,
@@ -105,7 +107,7 @@ Widget postCard(
 
                   //if haves images
                   Container(
-                    margin: EdgeInsets.only(top: 10, right: 20),
+                    margin: const EdgeInsets.only(top: 10, right: 20),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -129,10 +131,12 @@ Widget postCard(
                             return isLiked
                                 ? SvgPicture.asset(
                                     AssetsConstants.likeFilledIcon,
+                                    // ignore: deprecated_member_use
                                     color: Pallete.gradient2,
                                   )
                                 : SvgPicture.asset(
                                     AssetsConstants.likeOutlinedIcon,
+                                    // ignore: deprecated_member_use
                                     color: Pallete.borderColor,
                                   );
                           }),

@@ -14,6 +14,7 @@ class ReplyScreen extends StatelessWidget {
   final Timestamp timestamp;
   final String repliedto;
   final String autorReply;
+  final String aimage;
   const ReplyScreen(
       {super.key,
       required this.comentarios,
@@ -24,7 +25,8 @@ class ReplyScreen extends StatelessWidget {
       required this.text,
       required this.timestamp,
       required this.repliedto,
-      required this.autorReply});
+      required this.autorReply,
+      required this.aimage});
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +40,7 @@ class ReplyScreen extends StatelessWidget {
       body: Column(
         children: [
           postCard(id, nome, text, curtidas, reposts, comentarios, timestamp,
-              context, repliedto, autorReply),
+              context, repliedto, autorReply, aimage),
           StreamBuilder(
             stream: database.getRepliesPostsStream(id),
             builder: (context, snapshot) {
@@ -78,6 +80,7 @@ class ReplyScreen extends StatelessWidget {
                     int repostsr = post['Reposts'];
                     Timestamp timestampr = post['TimeStamp'];
                     String autorReply = post['AutorReply'];
+                    String aimage = post['AImage'];
 
                     // return as a list tile
                     return postCard(
@@ -90,7 +93,8 @@ class ReplyScreen extends StatelessWidget {
                         timestampr,
                         context,
                         repliedtor,
-                        autorReply);
+                        autorReply,
+                        aimage);
                   },
                 ),
               );

@@ -4,7 +4,10 @@ import 'package:lackstage/Pallete.dart';
 
 class SearchTile extends StatelessWidget {
   final String nome;
-  const SearchTile({super.key, required this.nome});
+  final String image;
+  final String bio;
+  const SearchTile(
+      {super.key, required this.nome, required this.image, required this.bio});
 
   @override
   Widget build(BuildContext context) {
@@ -13,25 +16,24 @@ class SearchTile extends StatelessWidget {
         Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => UserProfile(nome: nome),
+              builder: (context) => UserProfile(nome: nome, image: image),
             ));
       },
       child: ListTile(
-        leading: const CircleAvatar(
-          backgroundImage: NetworkImage(
-              'https://cdn-icons-png.flaticon.com/512/1816/1816466.png'),
+        leading: CircleAvatar(
+          backgroundImage: NetworkImage(image),
           radius: 30,
         ),
         title: Text(
           nome,
           style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
         ),
-        subtitle: const Column(
+        subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'bioluminescencia',
-              style: TextStyle(color: Pallete.whiteColor),
+              bio,
+              style: const TextStyle(color: Pallete.whiteColor),
             ),
           ],
         ),

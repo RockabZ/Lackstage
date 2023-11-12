@@ -51,10 +51,21 @@ class PostList extends StatelessWidget {
                   Timestamp timestamp = post['TimeStamp'];
                   String repliedto = post['RepliedTo'];
                   String autorreply = post['AutorReply'];
+                  String aimage = post['AImage'];
                   // return as a list tile
 
-                  return postCard(id, user, text, curtidas, reposts,
-                      comentarios, timestamp, context, repliedto, autorreply);
+                  return postCard(
+                      id,
+                      user,
+                      text,
+                      curtidas,
+                      reposts,
+                      comentarios,
+                      timestamp,
+                      context,
+                      repliedto,
+                      autorreply,
+                      aimage);
                 },
               ),
             );

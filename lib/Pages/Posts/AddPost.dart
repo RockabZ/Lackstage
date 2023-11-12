@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lackstage/Pages/Posts/AddPost_Controller.dart';
 import 'package:lackstage/Pallete.dart';
@@ -14,6 +15,8 @@ class AddPostPage extends StatefulWidget {
 }
 
 class _AddPostPageState extends State<AddPostPage> {
+  User? user = FirebaseAuth.instance.currentUser;
+
   List<File> images = [];
   PostController postar = PostController();
   final TextEditingController _text = TextEditingController();
@@ -51,30 +54,33 @@ class _AddPostPageState extends State<AddPostPage> {
           child: SingleChildScrollView(
         child: Column(
           children: [
-            Row(
-              children: [
-                const CircleAvatar(
-                  backgroundImage: NetworkImage(
-                      'https://cdn-icons-png.flaticon.com/512/1816/1816466.png'),
-                  radius: 30,
-                ),
-                SizedBox(width: 15),
-                Expanded(
-                  child: TextField(
-                    controller: _text,
-                    style: const TextStyle(fontSize: 22),
-                    decoration: const InputDecoration(
-                        hintText: "O que está acontecendo?",
-                        hintStyle: TextStyle(
-                          color: Pallete.greyColor,
-                          fontSize: 22,
-                          fontWeight: FontWeight.w600,
-                        ),
-                        border: InputBorder.none),
-                    maxLines: null,
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CircleAvatar(
+                    backgroundImage: NetworkImage(user!.photoURL.toString()),
+                    radius: 30,
                   ),
-                )
-              ],
+                  const SizedBox(width: 15),
+                  Expanded(
+                    child: TextField(
+                      controller: _text,
+                      style: const TextStyle(fontSize: 22),
+                      decoration: const InputDecoration(
+                          hintText: "O que está acontecendo?",
+                          hintStyle: TextStyle(
+                            color: Pallete.greyColor,
+                            fontSize: 22,
+                            fontWeight: FontWeight.w600,
+                          ),
+                          border: InputBorder.none),
+                      maxLines: null,
+                    ),
+                  )
+                ],
+              ),
             ),
             if (images.isNotEmpty)
               CarouselSlider(

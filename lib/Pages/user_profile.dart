@@ -6,10 +6,18 @@ import 'package:lackstage/Pallete.dart';
 import 'package:lackstage/Services/Firebase/GetPosts.dart';
 import 'package:lackstage/ui/PostCard.dart';
 
-class UserProfile extends StatelessWidget {
+class UserProfile extends StatefulWidget {
   final String nome;
-  const UserProfile({super.key, required this.nome});
+  final String image;
+  final String bio;
+  const UserProfile(
+      {super.key, required this.nome, required this.image, this.bio = ''});
 
+  @override
+  State<UserProfile> createState() => _UserProfileState();
+}
+
+class _UserProfileState extends State<UserProfile> {
   @override
   Widget build(BuildContext context) {
     final GetPosts database = GetPosts();
@@ -21,7 +29,7 @@ class UserProfile extends StatelessWidget {
         centerTitle: true,
         title: const Text('Perfil'),
         actions: [
-          user!.displayName == nome
+          user!.displayName == widget.nome
               ? Padding(
                   padding:
                       const EdgeInsets.all(8.0).copyWith(left: 15, right: 15),
@@ -51,9 +59,8 @@ class UserProfile extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              const CircleAvatar(
-                backgroundImage: NetworkImage(
-                    'https://cdn-icons-png.flaticon.com/512/1816/1816466.png'),
+              CircleAvatar(
+                backgroundImage: NetworkImage(widget.image),
                 radius: 45,
               ),
               const SizedBox(
@@ -64,15 +71,28 @@ class UserProfile extends StatelessWidget {
                     color: Pallete.whiteColor,
                     fontSize: 35,
                     fontWeight: FontWeight.bold),
-                child: Text(nome),
+                child: Text(widget.nome),
               ),
-              const DefaultTextStyle(
-                style: TextStyle(
-                    color: Pallete.greyColor,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold),
-                child: Text('bio'),
-              ),
+              widget.bio == ''
+                  ? FutureBuilder(
+                      future: database.getBioByPerfil(user.email.toString()),
+                      builder: (context, snapshot) {
+                        String bio = snapshot.data.toString();
+                        return DefaultTextStyle(
+                            style: const TextStyle(
+                                color: Pallete.greyColor,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold),
+                            child: Text(bio));
+                      },
+                    )
+                  : DefaultTextStyle(
+                      style: const TextStyle(
+                          color: Pallete.greyColor,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold),
+                      child: Text(widget.bio),
+                    ),
               const SizedBox(height: 20),
               const Text(
                 'Posts',
@@ -85,7 +105,7 @@ class UserProfile extends StatelessWidget {
                 color: Pallete.borderColor,
               ),
               StreamBuilder(
-                stream: database.getPostsUser(nome),
+                stream: database.getPostsUser(widget.nome),
                 builder: (context, snapshot) {
                   //show loading circle
                   if (snapshot.connectionState == ConnectionState.waiting) {
@@ -123,6 +143,7 @@ class UserProfile extends StatelessWidget {
                         Timestamp timestamp = post['TimeStamp'];
                         String repliedto = post['RepliedTo'];
                         String autorreply = post['AutorReply'];
+                        String aimage = post['AImage'];
                         // return as a list tile
 
                         return postCard(
@@ -135,7 +156,8 @@ class UserProfile extends StatelessWidget {
                             timestamp,
                             context,
                             repliedto,
-                            autorreply);
+                            autorreply,
+                            aimage);
                       },
                     ),
                   );

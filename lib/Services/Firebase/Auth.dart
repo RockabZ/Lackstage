@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:lackstage/Utils.dart';
 
 class authUser {
+  final defaultimage =
+      'https://png.pngtree.com/png-vector/20220608/ourlarge/pngtree-user-profile-character-faceless-unknown-png-image_4816132.png';
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   cadastrarUsuario(
       {required String nome,
@@ -40,7 +42,8 @@ class authUser {
         UserCredential userCredential = await _firebaseAuth
             .createUserWithEmailAndPassword(email: email, password: senha);
 
-        await userCredential.user!.updateDisplayName(nome);
+        await userCredential.user!.updateDisplayName(usuario);
+        await userCredential.user!.updatePhotoURL(defaultimage);
         createUserDocument(userCredential, nome, usuario, email);
         // ignore: use_build_context_synchronously
         Navigator.pop(context);
@@ -66,18 +69,20 @@ class authUser {
   Future<void> deslogar() async {
     return _firebaseAuth.signOut();
   }
-}
 
-Future<void> createUserDocument(UserCredential? userCredential, String nome,
-    String usuario, String email) async {
-  if (userCredential != null && userCredential.user != null) {
-    await FirebaseFirestore.instance
-        .collection('Users')
-        .doc(userCredential.user!.email)
-        .set({
-      'email': email,
-      'nome': nome,
-      'NomeUsuario': usuario,
-    });
+  Future<void> createUserDocument(UserCredential? userCredential, String nome,
+      String usuario, String email) async {
+    if (userCredential != null && userCredential.user != null) {
+      await FirebaseFirestore.instance
+          .collection('Users')
+          .doc(userCredential.user!.email)
+          .set({
+        'email': email,
+        'nome': nome,
+        'NomeUsuario': usuario,
+        'Image': defaultimage,
+        'Bio': '',
+      });
+    }
   }
 }

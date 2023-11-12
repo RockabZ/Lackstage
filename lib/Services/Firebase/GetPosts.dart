@@ -37,11 +37,18 @@ class GetPosts {
   Stream<QuerySnapshot> getPerfilsBySearch(String nome) {
     final perfilsSearchStram = FirebaseFirestore.instance
         .collection('Users')
-        .where('nome', isGreaterThanOrEqualTo: nome)
-        .where('nome', isLessThan: nome + '\uf8ff')
+        .where('NomeUsuario', isGreaterThanOrEqualTo: nome)
+        .where('NomeUsuario', isLessThan: nome + '\uf8ff')
         .snapshots();
 
     return perfilsSearchStram;
+  }
+
+  Future<String> getBioByPerfil(String email) async {
+    var document =
+        await FirebaseFirestore.instance.collection('Users').doc(email).get();
+    var bio = document.get('Bio');
+    return bio;
   }
 
   Future<void> likePost(String id) async {

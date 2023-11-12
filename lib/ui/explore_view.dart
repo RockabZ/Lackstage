@@ -84,11 +84,17 @@ class _ExploreViewState extends State<ExploreView> {
                           final perfil = perfis[index];
 
                           // get data from each perfil
-                          String user = perfil['nome'];
+                          String user = perfil['NomeUsuario'];
+                          String image = perfil['Image'];
+                          String bio = perfil['Bio'];
 
                           // return as a list tile
 
-                          return SearchTile(nome: user);
+                          return SearchTile(
+                            nome: user,
+                            image: image,
+                            bio: bio,
+                          );
                         },
                       ),
                     );
