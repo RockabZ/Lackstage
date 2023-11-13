@@ -109,7 +109,8 @@ class ReplyScreen extends StatelessWidget {
                 images: [],
                 text: value,
                 context: context,
-                autorreply: nome);
+                autorreply: nome,
+                numero: 0);
           },
           decoration: const InputDecoration(hintText: 'Poste sua reposta')),
     );

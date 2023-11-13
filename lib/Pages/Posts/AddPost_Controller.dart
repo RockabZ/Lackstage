@@ -15,6 +15,7 @@ class PostController {
     required String text,
     required BuildContext context,
     required String autorreply,
+    required int numero,
   }) {
     if (text.isEmpty) {
       showSnackBar(context, 'Digite algo');
@@ -32,7 +33,8 @@ class PostController {
             text: text,
             context: context,
             repliedto: repliedto,
-            autor: autorreply);
+            autor: autorreply,
+            numero: numero);
       }
     }
   }
@@ -60,12 +62,12 @@ class PostController {
     });
   }
 
-  Future<void> _shareTextPost({
-    required String text,
-    required BuildContext context,
-    required String repliedto,
-    required String autor,
-  }) async {
+  Future<void> _shareTextPost(
+      {required String text,
+      required BuildContext context,
+      required String repliedto,
+      required String autor,
+      required int numero}) async {
     await FirebaseFirestore.instance.collection('Posts').doc().set({
       'Autor': user!.displayName,
       'Text': text,
@@ -78,6 +80,8 @@ class PostController {
       'AImage': user!.photoURL,
     });
     // ignore: use_build_context_synchronously
-    Navigator.pop(context);
+    if (numero == 0) {
+      Navigator.pop(context);
+    }
   }
 }

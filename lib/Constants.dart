@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lackstage/Pallete.dart';
+import 'package:lackstage/Responsive/post_list_web.dart';
+import 'package:lackstage/Responsive/user_profile_web.dart';
 import 'package:lackstage/ui/chat_function.dart';
 import 'package:lackstage/ui/explore_view.dart';
 import 'package:lackstage/ui/notification_function.dart';
@@ -18,6 +20,13 @@ class AssetsConstants {
   static const String likeOutlinedIcon = '$_svgsPath/like_outlined.svg';
   static const String likeFilledIcon = '$_svgsPath/like_filled.svg';
 
+  static List<Widget> pagesweb = [
+    const PostListWeb(),
+    const ExploreView(),
+    const UserProfileWeb(),
+    const NotificationView(),
+    const ChatList(),
+  ];
   static List<Widget> bottomTabBarPages = [
     const PostList(),
     const ExploreView(),
