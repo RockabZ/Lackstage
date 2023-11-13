@@ -5,7 +5,8 @@ import '../ui/social_button.dart';
 import 'package:lackstage/ui/gradient_button.dart';
 
 class RegisterPage extends StatefulWidget {
-  const RegisterPage({super.key});
+  final double tamanho;
+  const RegisterPage({super.key, required this.tamanho});
 
   @override
   State<RegisterPage> createState() => _RegisterPageState();
@@ -42,20 +43,29 @@ class _RegisterPageState extends State<RegisterPage> {
                 height: 50,
               ),
               const SizedBox(height: 15),
-              LoginField(controller: _nome, hintText: 'Nome Completo'),
-              const SizedBox(height: 15),
-              LoginField(controller: _usuario, hintText: 'Nome de Usuário'),
-              const SizedBox(height: 15),
-              LoginField(controller: _email, hintText: 'Email'),
+              LoginField(
+                  controller: _nome,
+                  hintText: 'Nome Completo',
+                  width: widget.tamanho),
               const SizedBox(height: 15),
               LoginField(
-                hintText: 'Senha',
-                obscureText: true,
-                controller: _senha,
+                controller: _usuario,
+                hintText: 'Nome de Usuário',
+                width: widget.tamanho,
               ),
+              const SizedBox(height: 15),
+              LoginField(
+                  controller: _email, hintText: 'Email', width: widget.tamanho),
+              const SizedBox(height: 15),
+              LoginField(
+                  hintText: 'Senha',
+                  obscureText: true,
+                  controller: _senha,
+                  width: widget.tamanho),
               const SizedBox(height: 20),
               const SizedBox(height: 15),
               GradientButton(
+                horizontalSize: widget.tamanho,
                 onPressed: () {
                   final nome = _nome.text;
                   final email = _email.text;

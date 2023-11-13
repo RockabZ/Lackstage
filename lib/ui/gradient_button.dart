@@ -9,7 +9,7 @@ class GradientButton extends StatelessWidget {
       {super.key,
       required this.onPressed,
       required this.text,
-      this.horizontalSize = 395});
+      required this.horizontalSize});
 
   @override
   Widget build(BuildContext context) {

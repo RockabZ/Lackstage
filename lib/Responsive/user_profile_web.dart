@@ -10,6 +10,6 @@ class UserProfileWeb extends StatelessWidget {
     User? user = FirebaseAuth.instance.currentUser;
 
     return UserProfile(
-        nome: user!.displayName.toString(), image: user!.photoURL.toString());
+        nome: user!.displayName.toString(), image: user.photoURL.toString());
   }
 }

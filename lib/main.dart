@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:lackstage/Responsive/DesktopHomePage.dart';
 import 'package:lackstage/Responsive/MobileHomePage.dart';
 import 'package:lackstage/Responsive/responsive_layout.dart';
-import 'Pages/LoginPage.dart';
+import 'package:lackstage/Responsive/responsive_login.dart';
 import 'Pallete.dart';
 import 'firebase_options.dart';
 
@@ -44,7 +44,7 @@ class RoteadorTela extends StatelessWidget {
             mobileScaffold: MobileHomePage(),
           );
         } else {
-          return LoginPage();
+          return const ResponsiveLogin();
         }
       },
     );

@@ -6,7 +6,8 @@ import '../ui/social_button.dart';
 import 'RegisterPage.dart';
 
 class LoginPage extends StatefulWidget {
-  LoginPage({super.key});
+  final double tamanho;
+  LoginPage({super.key, required this.tamanho});
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -41,15 +42,20 @@ class _LoginPageState extends State<LoginPage> {
                   height: 50,
                 ),
                 const SizedBox(height: 15),
-                LoginField(controller: _email, hintText: 'Email'),
+                LoginField(
+                    controller: _email,
+                    hintText: 'Email',
+                    width: widget.tamanho),
                 const SizedBox(height: 15),
                 LoginField(
                   controller: _senha,
                   hintText: 'Senha',
                   obscureText: true,
+                  width: widget.tamanho,
                 ),
                 const SizedBox(height: 20),
                 GradientButton(
+                  horizontalSize: widget.tamanho,
                   onPressed: () {
                     final email = _email.text;
                     final senha = _senha.text;
@@ -66,11 +72,13 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 const SizedBox(height: 15),
                 GradientButton(
+                    horizontalSize: widget.tamanho,
                     onPressed: () {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => RegisterPage()));
+                              builder: (context) =>
+                                  RegisterPage(tamanho: widget.tamanho)));
                     },
                     text: 'Registrar-se'),
                 const SizedBox(height: 20),

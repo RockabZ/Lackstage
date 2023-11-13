@@ -5,17 +5,20 @@ class LoginField extends StatelessWidget {
   final TextEditingController? controller;
   final String hintText;
   final bool obscureText;
-  const LoginField(
-      {super.key,
-      required this.hintText,
-      this.obscureText = false,
-      this.controller});
+  final double width;
+  const LoginField({
+    super.key,
+    required this.hintText,
+    this.obscureText = false,
+    this.controller,
+    required this.width,
+  });
 
   @override
   Widget build(BuildContext context) {
     return ConstrainedBox(
-      constraints: const BoxConstraints(
-        maxWidth: 400,
+      constraints: BoxConstraints(
+        maxWidth: width,
       ),
       child: TextFormField(
         controller: controller,
