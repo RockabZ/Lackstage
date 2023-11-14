@@ -19,6 +19,8 @@ class authUser {
 
     if (nome.isEmpty || usuario.isEmpty || email.isEmpty || senha.isEmpty) {
       showSnackBar(context, 'Preencha todos os campos');
+    } else if (senha.length < 6) {
+      showSnackBar(context, 'A senha precisa ter no minimo 6 digitos');
     } else {
       await usuarios
           .where('NomeUsuario', isEqualTo: usuario)
