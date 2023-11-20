@@ -2,8 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lackstage/Constants.dart';
-import 'package:lackstage/Pages/Posts/AddPost.dart';
-import 'package:lackstage/Pages/user_profile.dart';
+import 'package:lackstage/Responsive/Mobile/AddPost.dart';
+import 'package:lackstage/Responsive/Mobile/user_profile.dart';
 import 'package:lackstage/Pallete.dart';
 import 'package:lackstage/Services/Firebase/Auth.dart';
 

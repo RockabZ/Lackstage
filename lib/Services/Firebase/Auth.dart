@@ -1,14 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:lackstage/Responsive/Web/DesktopHomePage.dart';
+import 'package:lackstage/Services/Notification/notification_service.dart';
 import 'package:lackstage/Utils.dart';
 
 class authUser {
   final defaultimage =
-      'https://png.pngtree.com/png-vector/20220608/ourlarge/pngtree-user-profile-character-faceless-unknown-png-image_4816132.png';
+      'https://cdn.icon-icons.com/icons2/2596/PNG/512/check_small_icon_155663.png';
   final CollectionReference usuarios =
       FirebaseFirestore.instance.collection('Users');
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  NotificationService notificationService = NotificationService();
+
   cadastrarUsuario(
       {required String nome,
       required String usuario,
@@ -41,12 +46,13 @@ class authUser {
         }
       });
       if (checkedFields == 0) {
+        String? token = await notificationService.getToken();
         UserCredential userCredential = await _firebaseAuth
             .createUserWithEmailAndPassword(email: email, password: senha);
 
         await userCredential.user!.updateDisplayName(usuario);
         await userCredential.user!.updatePhotoURL(defaultimage);
-        createUserDocument(userCredential, nome, usuario, email);
+        createUserDocument(userCredential, nome, usuario, email, token!);
         // ignore: use_build_context_synchronously
         logarUsuario(email: email, senha: senha, context: context);
         // ignore: use_build_context_synchronously
@@ -75,7 +81,7 @@ class authUser {
   }
 
   Future<void> createUserDocument(UserCredential? userCredential, String nome,
-      String usuario, String email) async {
+      String usuario, String email, String token) async {
     if (userCredential != null && userCredential.user != null) {
       await FirebaseFirestore.instance
           .collection('Users')
@@ -86,18 +92,22 @@ class authUser {
         'NomeUsuario': usuario,
         'Image': defaultimage,
         'Bio': '',
+        'Token': token,
       });
     }
   }
 
-  Future<void> updateBio(
-      String nome, String bio, String email, BuildContext context) async {
+  Future<void> updateBio(String nome, String bio, String email,
+      BuildContext context, int numero) async {
     usuarios.doc(email).update({'Bio': bio});
-    // ignore: use_build_context_synchronously
-    Navigator.pop(context);
+    if (numero == 0) {
+      Navigator.pop(context);
+    } else {
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (context) => const DesktopHomePage()));
+    }
   }
 }
-
 
 
 

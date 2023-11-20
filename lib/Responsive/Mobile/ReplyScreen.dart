@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:lackstage/Pages/Posts/AddPost_Controller.dart';
+import 'package:lackstage/Services/Firebase/AddPost_Controller.dart';
 import 'package:lackstage/Services/Firebase/GetPosts.dart';
 import 'package:lackstage/ui/PostCard.dart';
 
@@ -40,7 +40,7 @@ class ReplyScreen extends StatelessWidget {
       body: Column(
         children: [
           postCard(id, nome, text, curtidas, reposts, comentarios, timestamp,
-              context, repliedto, autorReply, aimage),
+              context, repliedto, autorReply, aimage, 0),
           StreamBuilder(
             stream: database.getRepliesPostsStream(id),
             builder: (context, snapshot) {
@@ -94,7 +94,8 @@ class ReplyScreen extends StatelessWidget {
                         context,
                         repliedtor,
                         autorReply,
-                        aimage);
+                        aimage,
+                        0);
                   },
                 ),
               );

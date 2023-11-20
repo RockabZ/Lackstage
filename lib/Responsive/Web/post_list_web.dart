@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:lackstage/Pages/Posts/AddPost_Controller.dart';
+import 'package:lackstage/Services/Firebase/AddPost_Controller.dart';
 import 'package:lackstage/Pallete.dart';
 import 'package:lackstage/ui/PostCard.dart';
 import 'package:lackstage/Services/Firebase/GetPosts.dart';
@@ -58,6 +58,7 @@ class PostListWeb extends StatelessWidget {
                             repliedto: '',
                             autorreply: '',
                             numero: 1);
+                        _text.clear();
                       },
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
@@ -127,7 +128,8 @@ class PostListWeb extends StatelessWidget {
                       context,
                       repliedto,
                       autorreply,
-                      aimage);
+                      aimage,
+                      1);
                 },
               ),
             );

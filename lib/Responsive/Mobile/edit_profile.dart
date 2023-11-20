@@ -33,7 +33,7 @@ class EditProfile extends StatelessWidget {
                     final String bio = _bioController.text;
 
                     _authUser.updateBio(
-                        nome, bio, user!.email.toString(), context);
+                        nome, bio, user!.email.toString(), context, 0);
                   },
                   child: const Icon(Icons.check)),
             )

@@ -65,7 +65,8 @@ class PostList extends StatelessWidget {
                       context,
                       repliedto,
                       autorreply,
-                      aimage);
+                      aimage,
+                      0);
                 },
               ),
             );

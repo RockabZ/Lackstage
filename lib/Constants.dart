@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:lackstage/Pallete.dart';
-import 'package:lackstage/Responsive/post_list_web.dart';
-import 'package:lackstage/Responsive/user_profile_web.dart';
-import 'package:lackstage/ui/chat_function.dart';
+import 'package:lackstage/Responsive/Mobile/user_chats.dart';
+import 'package:lackstage/Responsive/Web/explore_view_web.dart';
+import 'package:lackstage/Responsive/Web/post_list_web.dart';
+import 'package:lackstage/Responsive/Web/user_profile_web.dart';
 import 'package:lackstage/ui/explore_view.dart';
 import 'package:lackstage/ui/notification_function.dart';
 import 'package:lackstage/ui/post_list.dart';
@@ -10,7 +11,7 @@ import 'package:lackstage/ui/post_list.dart';
 var myAppBar = AppBar(
   backgroundColor: Pallete.backgroundColor,
   centerTitle: true,
-  title: const Text('Tela inicial'),
+  title: const Text('Lackstage'),
 );
 
 class AssetsConstants {
@@ -22,15 +23,17 @@ class AssetsConstants {
 
   static List<Widget> pagesweb = [
     const PostListWeb(),
-    const ExploreView(),
+    const ExploreViewWeb(),
     const UserProfileWeb(),
     const NotificationView(),
-    const ChatList(),
+    UserChats(number: 1),
   ];
   static List<Widget> bottomTabBarPages = [
     const PostList(),
     const ExploreView(),
     const NotificationView(),
-    const ChatList(),
+    UserChats(
+      number: 0,
+    ),
   ];
 }

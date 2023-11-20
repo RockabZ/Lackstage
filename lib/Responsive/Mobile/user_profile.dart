@@ -1,9 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:lackstage/Pages/chat_page.dart';
-import 'package:lackstage/Pages/edit_profile.dart';
+import 'package:lackstage/Responsive/Mobile/chat_page.dart';
+import 'package:lackstage/Responsive/Mobile/edit_profile.dart';
 import 'package:lackstage/Pallete.dart';
+import 'package:lackstage/Responsive/Web/edit_profile_web.dart';
 import 'package:lackstage/Services/Chat/chat_service.dart';
 import 'package:lackstage/Services/Firebase/GetPosts.dart';
 import 'package:lackstage/ui/PostCard.dart';
@@ -12,8 +13,13 @@ class UserProfile extends StatefulWidget {
   final String nome;
   final String image;
   final String bio;
+  final int numero;
   const UserProfile(
-      {super.key, required this.nome, required this.image, this.bio = ''});
+      {super.key,
+      required this.nome,
+      required this.image,
+      this.bio = '',
+      this.numero = 0});
 
   @override
   State<UserProfile> createState() => _UserProfileState();
@@ -27,48 +33,90 @@ class _UserProfileState extends State<UserProfile> {
     final ChatService _chatService = ChatService();
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Pallete.backgroundColor,
-        centerTitle: true,
-        title: const Text('Perfil'),
-        actions: [
-          user!.displayName == widget.nome
-              ? Padding(
-                  padding:
-                      const EdgeInsets.all(8.0).copyWith(left: 15, right: 15),
-                  child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => EditProfile(),
-                            ));
-                      },
-                      child: const Icon(Icons.create_outlined)),
-                )
-              : Padding(
-                  padding:
-                      const EdgeInsets.all(8.0).copyWith(left: 15, right: 15),
-                  child: GestureDetector(
-                      onTap: () {
-                        _chatService.createChatRoom(
-                            user.displayName.toString(), widget.nome);
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  ChatPage(receiverUserID: widget.nome),
-                            ));
-                      },
-                      child: const Icon(Icons.message)),
-                ),
-        ],
-      ),
+      appBar: widget.numero == 0
+          ? AppBar(
+              backgroundColor: Pallete.backgroundColor,
+              centerTitle: true,
+              title: const Text('Perfil'),
+              actions: [
+                user!.displayName == widget.nome
+                    ? Padding(
+                        padding: const EdgeInsets.all(8.0)
+                            .copyWith(left: 15, right: 15),
+                        child: GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => EditProfile(),
+                                  ));
+                            },
+                            child: const Icon(Icons.create_outlined)),
+                      )
+                    : Padding(
+                        padding: const EdgeInsets.all(8.0)
+                            .copyWith(left: 15, right: 15),
+                        child: GestureDetector(
+                            onTap: () {
+                              _chatService.createChatRoom(
+                                  user.displayName.toString(), widget.nome);
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        ChatPage(receiverUserID: widget.nome),
+                                  ));
+                            },
+                            child: const Icon(Icons.message)),
+                      ),
+              ],
+            )
+          : null,
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
+              widget.numero == 0
+                  ? const SizedBox(
+                      width: 0,
+                    )
+                  : user!.displayName == widget.nome
+                      ? Align(
+                          alignment: Alignment.topRight,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0)
+                                .copyWith(left: 15, right: 15),
+                            child: GestureDetector(
+                                onTap: () {
+                                  Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => EditProfileWeb(),
+                                      ));
+                                },
+                                child: const Icon(Icons.create_outlined)),
+                          ),
+                        )
+                      : Align(
+                          alignment: Alignment.topRight,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0)
+                                .copyWith(left: 15, right: 15),
+                            child: GestureDetector(
+                                onTap: () {
+                                  _chatService.createChatRoom(
+                                      user.displayName.toString(), widget.nome);
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => ChatPage(
+                                            receiverUserID: widget.nome),
+                                      ));
+                                },
+                                child: const Icon(Icons.message)),
+                          ),
+                        ),
               const SizedBox(
                 height: 10,
               ),
@@ -88,7 +136,7 @@ class _UserProfileState extends State<UserProfile> {
               ),
               (widget.bio.isEmpty)
                   ? FutureBuilder(
-                      future: database.getBioByPerfil(user.email.toString()),
+                      future: database.getBioByPerfil(user!.email.toString()),
                       builder: (context, snapshot) {
                         String bio = snapshot.data.toString();
                         return DefaultTextStyle(
@@ -169,7 +217,8 @@ class _UserProfileState extends State<UserProfile> {
                             context,
                             repliedto,
                             autorreply,
-                            aimage);
+                            aimage,
+                            0);
                       },
                     ),
                   );

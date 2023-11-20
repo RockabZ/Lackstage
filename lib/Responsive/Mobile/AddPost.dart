@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:lackstage/Pages/Posts/AddPost_Controller.dart';
+import 'package:lackstage/Services/Firebase/AddPost_Controller.dart';
 import 'package:lackstage/Pallete.dart';
 import 'package:lackstage/Utils.dart';
 

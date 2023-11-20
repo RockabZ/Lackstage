@@ -45,6 +45,15 @@ class GetPosts {
     return perfilsSearchStram;
   }
 
+  Stream<QuerySnapshot> getAllPerfils(String nome) {
+    final perfilsSearchStram = FirebaseFirestore.instance
+        .collection('Users')
+        .where('NomeUsuario', isNotEqualTo: nome)
+        .snapshots();
+
+    return perfilsSearchStram;
+  }
+
   Future getPerfil(String email) {
     final perfil =
         FirebaseFirestore.instance.collection('Users').doc(email).get();
@@ -57,6 +66,13 @@ class GetPosts {
         await FirebaseFirestore.instance.collection('Users').doc(email).get();
     var bio = document.get('Bio');
     return bio;
+  }
+
+  Future<String> getTokenByPerfil(String email) async {
+    var document =
+        await FirebaseFirestore.instance.collection('Users').doc(email).get();
+    var token = document.get('Token');
+    return token;
   }
 
   Future<void> likePost(String id, String autor) async {
@@ -74,6 +90,10 @@ class GetPosts {
         if (await notificationService.checkIfNotifyExists(autor, id)) {
           notificationService.createNotification(
               autor, id, 'like', '${user!.displayName} curtiu o seu post');
+          String token = await getTokenByPerfil(user!.email.toString());
+          notificationService.sendPushMessage(
+              token, '${user!.displayName} curtiu o seu post', 'Lackstage');
+          print('chamou');
         }
       }
       return curtidas;

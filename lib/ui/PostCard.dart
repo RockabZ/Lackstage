@@ -3,8 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lackstage/Constants.dart';
-import 'package:lackstage/Pages/Posts/ReplyScreen.dart';
+import 'package:lackstage/Responsive/Mobile/ReplyScreen.dart';
 import 'package:lackstage/Pallete.dart';
+import 'package:lackstage/Responsive/Web/OpenMessage.dart';
 import 'package:lackstage/Services/Firebase/GetPosts.dart';
 import 'package:lackstage/Services/hashtag_text.dart';
 import 'package:lackstage/ui/Post_Icon_Buttons.dart';
@@ -23,6 +24,7 @@ Widget postCard(
   String repliedto,
   String autorreply,
   String aimage,
+  int numero,
 ) {
   User? user = FirebaseAuth.instance.currentUser;
 
@@ -30,22 +32,38 @@ Widget postCard(
 
   return GestureDetector(
     onTap: () {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ReplyScreen(
-              comentarios: comentarios,
-              curtidas: curtidas,
-              id: id,
-              nome: nome,
-              reposts: reposts,
-              text: text,
-              timestamp: timestamp,
-              repliedto: repliedto,
-              autorReply: autorreply,
-              aimage: aimage,
-            ),
-          ));
+      numero == 0
+          ? Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ReplyScreen(
+                  comentarios: comentarios,
+                  curtidas: curtidas,
+                  id: id,
+                  nome: nome,
+                  reposts: reposts,
+                  text: text,
+                  timestamp: timestamp,
+                  repliedto: repliedto,
+                  autorReply: autorreply,
+                  aimage: aimage,
+                ),
+              ))
+          : Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => OpenMessageWeb(
+                    nome: nome,
+                    id: id,
+                    text: text,
+                    curtidas: curtidas,
+                    reposts: reposts,
+                    comentarios: comentarios,
+                    timestamp: timestamp,
+                    repliedto: repliedto,
+                    autorReply: autorreply,
+                    aimage: aimage),
+              ));
     },
     child: Column(
       children: [
