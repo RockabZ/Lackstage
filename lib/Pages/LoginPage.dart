@@ -85,7 +85,7 @@ class _LoginPageState extends State<LoginPage> {
                                     RegisterPage(tamanho: widget.tamanho)));
                       },
                       text: 'Registrar-se'),
-                  const SizedBox(height: 20),
+                 /**  const SizedBox(height: 20),
                   const Text(
                     'ou',
                     style: TextStyle(
@@ -99,14 +99,15 @@ class _LoginPageState extends State<LoginPage> {
                       SocialButton(
                         iconPath: 'assets/svgs/g_logo.svg',
                         onPressed: () {},
-                      ),
+                       ),
                       const SizedBox(width: 20),
-                      SocialButton(
+                       SocialButton(
                         iconPath: 'assets/svgs/f_logo.svg',
                         onPressed: () {},
                       ),
+                      
                     ],
-                  )
+                  )*/
                 ],
               ),
             ],

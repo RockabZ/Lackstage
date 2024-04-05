@@ -85,7 +85,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   },
                   text: 'Cadastrar',
                 ),
-                const SizedBox(height: 20),
+               /**  const SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -99,7 +99,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       onPressed: () {},
                     ),
                   ],
-                )
+                )*/
               ],
             ),
           ],
