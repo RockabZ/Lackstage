@@ -18,6 +18,7 @@ class SocialButton extends StatelessWidget {
       icon: SvgPicture.asset(
         iconPath,
         color: Pallete.whiteColor,
+        height: 35,
       ),
     );
   }
