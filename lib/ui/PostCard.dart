@@ -127,16 +127,17 @@ Widget postCard(
                   Container(
                     margin: const EdgeInsets.only(top: 10, right: 20),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         PostIconButton(
                             pathname: AssetsConstants.commentIcon,
                             text: comentarios.toString(),
                             onTap: () {}),
-                        PostIconButton(
+                       /**  PostIconButton(
                             pathname: AssetsConstants.repostIcon,
                             text: reposts.toString(),
-                            onTap: () {}),
+                            onTap: () {}),*/
+                        const SizedBox(width: 60,),
                         LikeButton(
                           onTap: (isLiked) async {
                             database.likePost(id, nome);
@@ -159,14 +160,14 @@ Widget postCard(
                                   );
                           }),
                         ),
-                        IconButton(
+                       /**  IconButton(
                           onPressed: () {},
                           icon: const Icon(
                             Icons.share_outlined,
                             size: 25,
                             color: Pallete.borderColor,
                           ),
-                        )
+                        )*/
                       ],
                     ),
                   ),
